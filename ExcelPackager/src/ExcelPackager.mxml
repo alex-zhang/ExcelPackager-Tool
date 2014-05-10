@@ -7,11 +7,12 @@
 		<![CDATA[
 			import com.childoftv.xlsxreader.Worksheet;
 			import com.childoftv.xlsxreader.XLSXLoader;
-			import com.sail.DataRepository;
-			import com.sail.TableBasic;
+			import com.fireflyLib.utils.dataRepo.DataRepository;
+			import com.fireflyLib.utils.dataRepo.DataTable;
 			
 			import flash.utils.ByteArray;
 			import flash.utils.Timer;
+			import flash.utils.getTimer;
 			
 			import mx.events.FlexEvent;
 			import mx.utils.StringUtil;
@@ -278,6 +279,9 @@
 				
 				logText(n + " files package. size: " + (pacakgeBytes.length / 1024) + " KBytes");
 				logText("out put file: " + file.nativePath);
+				
+				logText(_dataRespository.toString());
+				
 				logText("success!!!");
 				
 				endFlow();
@@ -314,7 +318,7 @@
 						var demensionStartResults:Array = splitCharsAndNumber(dimensionArr[0]);
 						var demensionEndResults:Array = splitCharsAndNumber(dimensionArr[1]);
 						
-						logText("read excel file dimension: " + dimension);
+						logText("read excel file "+ fielName + " dimension: " + dimension);
 						//A->65 Z->90
 						
 						var colStartIndex:String = demensionStartResults[0];
@@ -346,12 +350,11 @@
 								if(compareChars(colChars, colEndIndex) <= 0)//col condition
 								{
 //									var t:int = getTimer();
-									var cellValue:String = excelWorkSheet.getCellValue2(rowIndex, colChars);
-//									trace(getTimer() - t);
-									
+									var cellValue:String = StringUtil.trim(excelWorkSheet.getCellValue2(rowIndex, colChars));
+//									excelWorkSheet.getCellValue("a");
 //									var cellKey:String = colChars + ":" + rowIndex;
 //									var cellValue:String = StringUtil.trim(excelWorkSheet.getCellValue(cellKey));
-									
+//									trace(getTimer() - t);
 									if(rowIndex == rowStartIndex)
 									{
 										//not start with character, will ignore the col
@@ -368,12 +371,16 @@
 											rowValue.push(cellValue);
 										}
 									}
+//									trace(colChars, rowIndex, "-----------------------");
 									
 									//--
 									colChars = stepChars(colChars);
+									
 								}
 								else//col out
 								{
+//									trace(colChars, rowIndex, "======================");
+									
 									var lastRows:Array = rowValue;
 									
 									progress.setProgress(rowIndex - rowStartIndex, rowEndIndex - rowStartIndex);
@@ -395,9 +402,13 @@
 							else//row out
 							{
 								//Tick complete
-								loadTableCellValueTicker.stop();
-								loadTableCellValueTicker.removeEventListener(TimerEvent.TIMER, loadTableCellValueTickerHandler);
-								loadTableCellValueTicker = null;
+								if(loadTableCellValueTicker)
+								{
+									loadTableCellValueTicker.stop();
+									loadTableCellValueTicker.removeEventListener(TimerEvent.TIMER, loadTableCellValueTickerHandler);
+									loadTableCellValueTicker = null;	
+								}
+								
 								isTicking = false;
 								
 								//Bytes ============================================
@@ -410,10 +421,11 @@
 						//比较耗时
 						function loadTableCellValueTickerHandler():void 
 						{
-							//excute 1ms 
-							for(var i:int = 0; isTicking && i < 1000; i++)
+							for(var i:int = 0; isTicking && i < 600; i++)
 							{
+//								var t:int = getTimer();
 								loadTableCellValue();
+//								trace(getTimer() - t);
 							}
 						}
 						
@@ -458,7 +470,7 @@
 			
 			private function analyzeSerializeTableExcel(fielName:String, colNames:Array, rowValues:Array):void
 			{
-				var table:TableBasic = new TableBasic(fielName);
+				var table:DataTable = new DataTable(fielName);
 				table.fieldNames = colNames;
 				
 				var n:int = rowValues.length;
@@ -489,7 +501,7 @@
 						
 						try
 						{
-							table.create(rowKey, rowKeyValues);
+							table.create(rowKey, rowKeyValues);	
 						}
 						catch(error:Error)
 						{
@@ -500,12 +512,16 @@
 				
 				_dataRespository.createTable(table.tableName, table);
 				
+//				trace(table.fieldNames.join(" "));
+				
 				logText("packaging file " + fielName + 
 					" ( " + 
 					(_importFileDirectoryChildrenFilesCount - importFileDirectoryChildrenFiles.length) + 
 					"/" + 
 					_importFileDirectoryChildrenFilesCount + 
 					" )");
+				
+				logText(table.toString());
 				
 				logText("-------------------------------------------------------");
 			}

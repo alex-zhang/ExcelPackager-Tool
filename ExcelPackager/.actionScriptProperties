@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="ExcelPackager.mxml" projectUUID="0645a558-d542-4e8b-a4f0-15dd3fb4e363" version="11">
+<actionScriptProperties analytics="false" mainApplicationPath="ExcelPackager.mxml" projectUUID="2bb0dfba-a4b7-434b-9bba-7c0635b91775" version="11">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="E:/my/source/gaming_develop/Sail/project/source/as3-xlsx-reader-master/src"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="E:/my/source/gaming_develop/Sail/project/source/fzip-master/src"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="E:/my/source/gaming_develop/Sail/project/source/as3xls/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="D:/work/GitHub/ExcelPackager-Tool/modules/as3-xlsx-reader-master/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="D:/work/GitHub/ExcelPackager-Tool/modules/fzip-master/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -14,7 +13,6 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-      <libraryPathEntry kind="3" linkType="1" path="/Sail/bin/Sail.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -41,4 +39,3 @@
     </buildTarget>
   </buildTargets>
 </actionScriptProperties>
-
